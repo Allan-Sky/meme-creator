@@ -1,65 +1,74 @@
 import Head from 'next/head'
+import { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [name, setName] = useState('')
+  const [insta, setinsta] = useState('')
+  const [frase, setFrase] = useState('')
+  const [meme, setMeme] = useState(false)
+  const HandleSubmit = (e) => {
+    e.preventDefault()
+
+    setMeme(true)
+  }
   return (
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className={styles.content}>
+        <header className={styles.header}>
+          <h1>Meme generator</h1>
+        </header>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <main className={styles.main}>
+          <form className={styles.form} onSubmit={(e) => HandleSubmit(e)}>
+            <input 
+            className={styles.input} 
+            name="perfil" 
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            />
+            
+            <input 
+            className={styles.input}  
+            name="frase" 
+            placeholder="instagram"
+            value={insta}
+            onChange={(e) => setinsta(e.target.value)}
+            />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+            <textarea 
+            className={styles.textarea} 
+            placeholder="texto"
+            value={frase}
+            onChange={(e) => setFrase(e.target.value)}
+            ></textarea>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+            <button className={styles.button} type="submit">Criar meme</button>
+          </form>
+        </main>
+      </div>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      {
+          meme && (
+            <div className={styles.post}>
+              <header>
+                <img src="https://instagram.fpnz4-1.fna.fbcdn.net/v/t51.2885-19/s150x150/120929127_778697606029321_5775913451656672964_n.jpg?_nc_ht=instagram.fpnz4-1.fna.fbcdn.net&_nc_ohc=kKuWjy-uKr4AX_Imj5T&oh=3710276c1b7be23f259979b7fb84ee5c&oe=5FAAA201" alt="photo"/>
+                <div>
+                  <strong>{name}</strong>
+                  <p>{insta}</p>
+                </div>
+                </header>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+                <p>{frase}</p>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+            </div>
+          )
+        }
     </div>
   )
 }
